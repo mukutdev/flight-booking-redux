@@ -2,7 +2,7 @@ import { BOOKNOW } from "./actionType"
 
 export const booking = formData =>{
     return {
-        action : BOOKNOW,
+        type : BOOKNOW,
         payload : formData
     }
 } 
