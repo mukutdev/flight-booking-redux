@@ -1,4 +1,4 @@
-import { BOOKNOW } from "./actionType";
+import { BOOKNOW, DELETEBOOKING } from "./actionType";
 
 
 const initialState = []
@@ -9,14 +9,17 @@ const nextBookingId = bookings =>{
 }
 
 const createActionReducer = (state = initialState , action)=>{
-
     switch (action.type) {
         case BOOKNOW:
+            if(state.length >= 3){
+                return state;
+            }
             return [
                 ...state,
                 {id : nextBookingId(state) , ...action.payload}
             ]
-    
+        case DELETEBOOKING:
+            return state.filter(booking => booking.id !== action.payload)   
         default:
             return state;
     }

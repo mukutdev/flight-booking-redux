@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./components/Header";
-import { booking } from "./redux/booking/action";
+import { booking, deleteBooking } from "./redux/booking/action";
 
 function App() {
 
@@ -24,6 +24,12 @@ function App() {
     const handleBooking = (e)=>{
         e.preventDefault()
         dispatch(booking(formData))
+    }
+
+    const handleRemove = id =>{
+
+      dispatch(deleteBooking(id))
+
     }
 
     console.log(bookings)
@@ -106,7 +112,8 @@ function App() {
             <svg width="15px" height="15px" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            <span  className="text-sm">Book</span>
+            <span  className="text-sm disabled:pointer-events-none"
+             disabled={bookings.length >= 3 ? true : false} >Book</span>
           </button>
         </form>
       </div>
@@ -130,7 +137,7 @@ function App() {
        {
         bookings.map(booking => {
           return (
-            <tbody className="divide-y divide-gray-300/20" id="lws-previewBooked">
+            <tbody key={booking.id} className="divide-y divide-gray-300/20" id="lws-previewBooked">
             {/* <!-- Row 1 --> */}
             <tr className="lws-bookedTable text-black">
               <td className="px-6 py-4">
@@ -152,7 +159,7 @@ function App() {
               </td>
               <td className="px-6 py-4 text-center">
                 <div className="flex justify-center gap-4">
-                  <button className="lws-remove">
+                  <button className="lws-remove" onClick={()=> handleRemove(booking.id)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                       stroke="currentColor" className="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round"

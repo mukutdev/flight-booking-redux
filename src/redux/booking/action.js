@@ -1,4 +1,4 @@
-import { BOOKNOW } from "./actionType"
+import { BOOKNOW, DELETEBOOKING } from "./actionType"
 
 export const booking = formData =>{
     return {
@@ -6,3 +6,9 @@ export const booking = formData =>{
         payload : formData
     }
 } 
+export const deleteBooking = id =>{
+    return{
+        type : DELETEBOOKING,
+        payload : id
+    }
+}
