@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BookingTable from "./components/BookingTable";
 import Header from "./components/Header";
 import { booking, deleteBooking } from "./redux/booking/action";
 
 function App() {
+
+  const formRef = useRef(null);
 
   const [formData, setFormData] = useState({
     from: '',
@@ -25,6 +27,7 @@ function App() {
     const handleBooking = (e)=>{
         e.preventDefault()
         dispatch(booking(formData))
+        formRef.current.reset();
     }
 
     const handleRemove = id =>{
@@ -42,7 +45,7 @@ function App() {
     {/* <!-- Input Data --> */}
     <div className="mt-[160px] mx-4 md:mt-[160px] relative">
       <div className="bg-white rounded-md max-w-6xl w-full mx-auto">
-        <form className="first-hero lws-inputform" onSubmit={handleBooking} >
+        <form ref={formRef}  className="first-hero lws-inputform" onSubmit={handleBooking} >
           {/* <!-- From --> */}
           <div className="des-from">
             <p>Destination From</p>
